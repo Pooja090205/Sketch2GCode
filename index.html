@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sketch2Code — CAM Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-container">
+  <aside class="sidebar">
+    <div class="header">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Sketch2Code
+    </div>
+
+    <!-- Shape Tools -->
+    <div>
+      <div class="tool-label">Quick Tools</div>
+      <div class="tool-grid">
+        <button class="shape-btn active" id="tool-sketch">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18.5 5.5l-10 10"/></svg>
+          <span>Sketch</span>
+        </button>
+        <button class="shape-btn" id="tool-line">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="19" x2="19" y2="5"/></svg>
+          <span>Line</span>
+        </button>
+        <button class="shape-btn" id="tool-rect">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+          <span>Rect</span>
+        </button>
+        <button class="shape-btn" id="tool-circle">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+          <span>Circle</span>
+        </button>
+      </div>
+
+      <div class="tool-label" style="margin-top: 15px;">More Shapes</div>
+      <select id="shapeDropdown" class="shape-select">
+        <option value="" disabled selected>Select Shape...</option>
+        <option value="triangle">Triangle (3 Sides)</option>
+        <option value="pentagon">Pentagon (5 Sides)</option>
+        <option value="hexagon">Hexagon (6 Sides)</option>
+        <option value="octagon">Octagon (8 Sides)</option>
+        <option value="decagon">Decagon (10 Sides)</option>
+        <option value="star">Star (5-Point)</option>
+        <option value="burst">Burst (8-Point Star)</option>
+      </select>
+
+      <!-- Import Section -->
+      <div class="tool-label" style="margin-top: 15px;">Import</div>
+      <button class="voice-trigger" id="btnImport">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right:8px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <span>Upload Image</span>
+      </button>
+      <input type="file" id="imgLoader" accept="image/*" style="display:none" />
+    </div>
+
+    <button id="micBtn" class="voice-trigger" style="margin-top: 15px;">
+      <div class="dot"></div>
+      <span id="micText">Click to Speak</span>
+    </button>
+
+    <div class="panel-section">
+      <div class="tool-label">Properties</div>
+      <div class="data-row">
+        <span>Object</span>
+        <span class="data-val" id="dispType">-</span>
+      </div>
+      <div class="data-row">
+        <span>Dimensions</span>
+        <span class="data-val" id="dispDim">-</span>
+      </div>
+      <div class="data-row" style="margin-top:5px; border-top:1px solid #333; padding-top:5px">
+        <span>Cut Depth</span>
+        <span class="data-val" id="dispDepth">2.0 mm</span>
+      </div>
+    </div>
+
+    <div class="console" id="consoleLog">
+      <div class="log-item">System ready.</div>
+    </div>
+
+    <button id="exportBtn" class="btn-primary">Generate G-Code</button>
+  </aside>
+
+  <div class="viewport" id="viewport">
+    <canvas id="canvas"></canvas>
+    <div id="voiceToast" class="voice-toast">Listening...</div>
+    
+    <div id="simLegend" class="sim-legend">
+        <div class="legend-item"><div class="dot-cut"></div> Cutting Feed (G1)</div>
+        <div class="legend-item"><div class="dot-rapid"></div> Rapid Travel (G0)</div>
+    </div>
+
+    <div class="bottom-toolbar">
+      <button class="tool-btn active" id="modeDraw">Design View</button>
+      <button class="tool-btn" id="modeSim">▶ Run Simulation</button>
+      <button class="tool-btn" id="btnUndo">↶ Undo</button>
+      <button class="tool-btn" id="btnReset" style="color:#ef4444">Clear All</button>
+    </div>
+  </div>
+</div>
+
+<script src="main.js" defer></script>
+</body>
+</html>
